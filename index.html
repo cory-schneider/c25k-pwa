@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#e94560">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>C25K Runner</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <!-- Install Banner -->
+  <div id="install-banner" class="install-banner">
+    <span>Install C25K for offline use</span>
+    <button id="btn-install">Install</button>
+    <button id="btn-dismiss-install" class="btn-dismiss">&times;</button>
+  </div>
+
+  <!-- Home Screen -->
+  <div id="screen-home" class="screen active">
+    <header>
+      <h1>C25K Runner</h1>
+      <p id="last-active" class="subtext"></p>
+    </header>
+
+    <div class="next-workout">
+      <p class="next-label">Next Workout</p>
+      <h2 id="home-current"></h2>
+      <p class="workout-duration"><span id="home-duration"></span></p>
+      <button id="btn-start" class="btn-primary">Start</button>
+    </div>
+
+    <ul id="workout-list" class="workout-list"></ul>
+
+    <footer>
+      <button id="btn-reset" class="btn-text">Reset Progress</button>
+    </footer>
+  </div>
+
+  <!-- Active Workout Screen -->
+  <div id="screen-workout" class="screen">
+    <div class="workout-header">
+      <h2 id="workout-title"></h2>
+      <p id="interval-counter"></p>
+    </div>
+
+    <div class="timer-area">
+      <p id="interval-type" class="interval-type"></p>
+      <p id="timer-display" class="timer-display"></p>
+    </div>
+
+    <div class="progress-bar">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+
+    <p class="total-elapsed">Elapsed: <span id="total-elapsed">0:00</span></p>
+
+    <div class="workout-controls">
+      <button id="btn-pause" class="btn-primary">Pause</button>
+      <button id="btn-stop" class="btn-secondary">Stop</button>
+    </div>
+  </div>
+
+  <!-- Workout Complete Screen -->
+  <div id="screen-complete" class="screen">
+    <div class="complete-content">
+      <h2>Workout Complete</h2>
+      <p id="complete-title" class="complete-workout-name"></p>
+      <p class="complete-time">Total time: <span id="complete-time"></span></p>
+      <p id="next-preview" class="next-preview"></p>
+      <button id="btn-complete-home" class="btn-primary">Done</button>
+    </div>
+  </div>
+
+  <!-- Safari Block Screen -->
+  <div id="screen-safari" class="screen">
+    <div class="safari-content">
+      <h2>Safari Not Supported</h2>
+      <p>This app relies on background timers and audio that Safari on iOS doesn't support reliably.</p>
+      <p>For the best experience, try one of these options:</p>
+      <ul>
+        <li>Use <strong>Chrome</strong> or <strong>Firefox</strong> on Android</li>
+        <li>Search for a native C25K app on the App Store</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Home button (persistent, not on home screen) -->
+  <button id="btn-home" class="btn-home" aria-label="Back to home">&larr;</button>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

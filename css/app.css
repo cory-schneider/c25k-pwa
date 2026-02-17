@@ -1,0 +1,373 @@
+/* === Reset & Base === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #1a1a2e;
+  color: #eee;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* === Screens === */
+.screen {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  padding-top: env(safe-area-inset-top, 1.5rem);
+  padding-bottom: env(safe-area-inset-bottom, 1.5rem);
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* === Buttons === */
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  touch-action: manipulation;
+}
+
+.btn-primary {
+  background: #e94560;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 1rem 2.5rem;
+  min-height: 56px;
+  min-width: 160px;
+}
+
+.btn-primary:active {
+  background: #c73650;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: #eee;
+  padding: 0.75rem 1.5rem;
+  min-height: 48px;
+}
+
+.btn-secondary:active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-text {
+  background: none;
+  color: #888;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  min-height: 48px;
+}
+
+/* === Home Screen === */
+#screen-home {
+  overflow-y: auto;
+}
+
+#screen-home header {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+
+#screen-home h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e94560;
+}
+
+.subtext {
+  color: #888;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.next-workout {
+  text-align: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.next-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  margin-bottom: 0.25rem;
+}
+
+.next-workout h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.workout-duration {
+  color: #aaa;
+  margin-bottom: 1rem;
+}
+
+/* === Workout List === */
+.workout-list {
+  list-style: none;
+  padding: 0.75rem 0;
+  flex: 1;
+}
+
+.workout-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.workout-item:active {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.workout-item.completed {
+  opacity: 0.5;
+}
+
+.workout-item.next {
+  background: rgba(233, 69, 96, 0.1);
+  border-radius: 8px;
+}
+
+.workout-label {
+  flex: 1;
+}
+
+.workout-time {
+  color: #888;
+  margin-right: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.checkmark {
+  color: #4caf50;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+#screen-home footer {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* === Active Workout Screen === */
+.workout-header {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.workout-header h2 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #ccc;
+}
+
+.workout-header p {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 0.25rem;
+}
+
+.timer-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.interval-type {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.timer-display {
+  font-size: 5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* Interval type colors */
+.interval-warmup { background: #2d3a4a; }
+.interval-run { background: #c0392b; }
+.interval-walk { background: #1a5276; }
+.interval-cooldown { background: #2d3a4a; }
+
+.interval-warmup .interval-type,
+.interval-cooldown .interval-type { color: #8cc; }
+.interval-run .interval-type { color: #ffd; }
+.interval-walk .interval-type { color: #cef; }
+
+.progress-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #e94560;
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.3s linear;
+}
+
+.total-elapsed {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.workout-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+/* === Complete Screen === */
+.complete-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.complete-content h2 {
+  font-size: 1.75rem;
+  color: #4caf50;
+}
+
+.complete-workout-name {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.complete-time {
+  color: #aaa;
+}
+
+.next-preview {
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* === Safari Screen === */
+.safari-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.safari-content h2 {
+  color: #e94560;
+}
+
+.safari-content ul {
+  text-align: left;
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.safari-content li {
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+/* === Back Button === */
+.btn-home {
+  position: fixed;
+  top: env(safe-area-inset-top, 12px);
+  left: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #eee;
+  font-size: 1.25rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.btn-home:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Visibility controlled by JS */
+
+/* === Install Banner === */
+.install-banner {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #16213e;
+  padding: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  z-index: 20;
+  font-size: 0.9rem;
+}
+
+.install-banner.visible {
+  display: flex;
+}
+
+.install-banner button {
+  padding: 0.5rem 1rem;
+}
+
+.install-banner .btn-dismiss {
+  background: none;
+  color: #888;
+  font-size: 1.25rem;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+#btn-install {
+  background: #e94560;
+  color: #fff;
+  font-weight: 600;
+}
