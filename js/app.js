@@ -37,10 +37,10 @@ function groupIntervals(intervals) {
   const groups = [];
   let i = 0;
   while (i < intervals.length) {
-    // Try pattern lengths from longest viable down to 1
+    // Try pattern lengths from shortest up — prefer the smallest repeating unit
     let matched = false;
     const maxLen = Math.floor((intervals.length - i) / 2);
-    for (let pLen = maxLen; pLen >= 1; pLen--) {
+    for (let pLen = 1; pLen <= maxLen; pLen++) {
       const pattern = intervals.slice(i, i + pLen);
       // Only group run/walk patterns, not warmup/cooldown
       if (pattern.some((iv) => iv.type === "warmup" || iv.type === "cooldown")) {
