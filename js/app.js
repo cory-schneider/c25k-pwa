@@ -57,6 +57,8 @@ function renderHome() {
   const list = $("workout-list");
   list.innerHTML = "";
 
+  let expandedIndex = null;
+
   program.forEach((w, i) => {
     const li = document.createElement("li");
     const done = progress.completedWorkouts.includes(i);
@@ -66,15 +68,56 @@ function renderHome() {
     if (done) li.classList.add("completed");
     if (isNext) li.classList.add("next");
 
-    li.innerHTML = `
+    const header = document.createElement("div");
+    header.className = "workout-item-header";
+    header.innerHTML = `
       <span class="workout-label">${w.label}</span>
       <span class="workout-time">${formatTime(totalWorkoutDuration(w))}</span>
       ${done ? '<span class="checkmark">\u2713</span>' : ""}
     `;
 
-    li.addEventListener("click", () => {
+    const detail = document.createElement("div");
+    detail.className = "workout-detail";
+
+    const intervalList = document.createElement("ul");
+    intervalList.className = "interval-list";
+    w.intervals.forEach((iv) => {
+      const row = document.createElement("li");
+      row.className = `interval-row interval-row-${iv.type}`;
+      row.innerHTML = `
+        <span class="interval-row-type">${iv.type.toUpperCase()}</span>
+        <span class="interval-row-time">${formatTime(iv.duration)}</span>
+      `;
+      intervalList.appendChild(row);
+    });
+    detail.appendChild(intervalList);
+
+    const goBtn = document.createElement("button");
+    goBtn.className = "btn-primary btn-go";
+    goBtn.textContent = "Go";
+    goBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       currentWorkoutIndex = i;
       startWorkout();
+    });
+    detail.appendChild(goBtn);
+
+    li.appendChild(header);
+    li.appendChild(detail);
+
+    header.addEventListener("click", () => {
+      const isExpanded = li.classList.contains("expanded");
+      // Collapse previously expanded item
+      if (expandedIndex !== null) {
+        const prev = list.children[expandedIndex];
+        if (prev) prev.classList.remove("expanded");
+      }
+      if (isExpanded) {
+        expandedIndex = null;
+      } else {
+        li.classList.add("expanded");
+        expandedIndex = i;
+      }
     });
 
     list.appendChild(li);
