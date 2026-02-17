@@ -1,5 +1,5 @@
 import { program } from "./program.js";
-import { unlock, speak } from "./tts.js";
+import { unlock, speak, startKeepAlive, stopKeepAlive } from "./tts.js";
 import * as storage from "./storage.js";
 
 // --- State ---
@@ -97,8 +97,9 @@ function startWorkout() {
   const workout = program[currentWorkoutIndex];
   $("workout-title").textContent = workout.label;
 
-  // Unlock audio on user gesture
+  // Unlock audio on user gesture and start iOS keepalive
   unlock();
+  startKeepAlive();
 
   // Init worker
   if (worker) worker.terminate();
@@ -220,6 +221,7 @@ function workoutComplete() {
     worker = null;
   }
   timerState = "stopped";
+  stopKeepAlive();
 
   speak("Workout complete. Great job.");
 
@@ -260,6 +262,7 @@ function stopWorkout() {
     worker = null;
   }
   timerState = "stopped";
+  stopKeepAlive();
   renderHome();
 }
 
