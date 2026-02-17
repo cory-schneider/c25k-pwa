@@ -191,6 +191,15 @@ button {
   overflow: hidden;
 }
 
+.interval-group {
+  display: flex;
+}
+
+.interval-group-rows {
+  flex: 1;
+  min-width: 0;
+}
+
 .interval-row {
   display: flex;
   justify-content: space-between;
@@ -224,6 +233,19 @@ button {
 .interval-row-walk {
   background: rgba(26, 82, 118, 0.3);
   color: #9cf;
+}
+
+.repeat-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  color: #aaa;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
 
 .btn-go {

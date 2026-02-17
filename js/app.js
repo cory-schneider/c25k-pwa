@@ -31,6 +31,47 @@ function elapsedBeforeInterval(workout, intervalIndex) {
   return sum;
 }
 
+// --- Interval grouping for display ---
+// Detects repeated consecutive patterns (e.g. run/walk x8) and collapses them.
+function groupIntervals(intervals) {
+  const groups = [];
+  let i = 0;
+  while (i < intervals.length) {
+    // Try pattern lengths from longest viable down to 1
+    let matched = false;
+    const maxLen = Math.floor((intervals.length - i) / 2);
+    for (let pLen = maxLen; pLen >= 1; pLen--) {
+      const pattern = intervals.slice(i, i + pLen);
+      // Only group run/walk patterns, not warmup/cooldown
+      if (pattern.some((iv) => iv.type === "warmup" || iv.type === "cooldown")) {
+        continue;
+      }
+      let count = 1;
+      let j = i + pLen;
+      while (j + pLen <= intervals.length) {
+        const next = intervals.slice(j, j + pLen);
+        const same = next.every(
+          (iv, k) => iv.type === pattern[k].type && iv.duration === pattern[k].duration
+        );
+        if (!same) break;
+        count++;
+        j += pLen;
+      }
+      if (count > 1) {
+        groups.push({ pattern, count });
+        i = j;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      groups.push({ pattern: [intervals[i]], count: 1 });
+      i++;
+    }
+  }
+  return groups;
+}
+
 // --- Screen management ---
 function showScreen(name) {
   currentScreen = name;
@@ -81,14 +122,33 @@ function renderHome() {
 
     const intervalList = document.createElement("ul");
     intervalList.className = "interval-list";
-    w.intervals.forEach((iv) => {
-      const row = document.createElement("li");
-      row.className = `interval-row interval-row-${iv.type}`;
-      row.innerHTML = `
-        <span class="interval-row-type">${iv.type.toUpperCase()}</span>
-        <span class="interval-row-time">${formatTime(iv.duration)}</span>
-      `;
-      intervalList.appendChild(row);
+    const groups = groupIntervals(w.intervals);
+    groups.forEach((g) => {
+      const groupEl = document.createElement("li");
+      groupEl.className = "interval-group";
+      if (g.count > 1) groupEl.classList.add("has-repeat");
+
+      const rows = document.createElement("div");
+      rows.className = "interval-group-rows";
+      g.pattern.forEach((iv) => {
+        const row = document.createElement("div");
+        row.className = `interval-row interval-row-${iv.type}`;
+        row.innerHTML = `
+          <span class="interval-row-type">${iv.type.toUpperCase()}</span>
+          <span class="interval-row-time">${formatTime(iv.duration)}</span>
+        `;
+        rows.appendChild(row);
+      });
+      groupEl.appendChild(rows);
+
+      if (g.count > 1) {
+        const badge = document.createElement("span");
+        badge.className = "repeat-badge";
+        badge.textContent = `\u00d7${g.count}`;
+        groupEl.appendChild(badge);
+      }
+
+      intervalList.appendChild(groupEl);
     });
     detail.appendChild(intervalList);
 
