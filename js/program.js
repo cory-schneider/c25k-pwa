@@ -171,4 +171,15 @@ export const program = [
   workout(9, 3, [
     { type: "run", duration: 1800, cue: "Start running." },
   ]),
+
+  // Testing workout: alternating 10s intervals to verify audio cues
+  {
+    week: 0,
+    day: 0,
+    label: "Testing",
+    intervals: repeat([
+      { type: "run", duration: 10, cue: "Test." },
+      { type: "walk", duration: 10, cue: "Test." },
+    ], 6),
+  },
 ];
